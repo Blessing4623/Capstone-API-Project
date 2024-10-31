@@ -1,5 +1,5 @@
 # Retrieving all the data from the model Book and its subsequent values
-books = Book.objects.all().values()
+books = Book.objects.get().values()
 for book in books:
      print(book)
 
