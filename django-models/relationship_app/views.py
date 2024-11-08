@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth import login
 from django.contrib.auth import logout
-
+from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 
 def list_books(request):
@@ -32,5 +32,23 @@ class LoginView(login):
     template_name = 'relationship_app/login.html'
 class LogoutView(logout):
     template_name='relationship_app/logout.html'
+
+def is_admin(user):
+    return user.userprofile == 'Admin'
+def is_librarian(user):
+    return user.userprofile == 'Librarian'
+def is_member(user):
+    return user.userprofile == 'Member'
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
 
 
