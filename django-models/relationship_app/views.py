@@ -9,6 +9,7 @@ from django.views.generic import CreateView
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 # Create your views here.
 
 def list_books(request):
@@ -51,4 +52,21 @@ def librarian_view(request):
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
+def add(user):
+    return Book.Meta.permissions = 'can_add_book'
+def change(user):
+    return Book.Meta.permissions = 'can_change_book'
+def delete(user):
+    return Book.Meta.permissions = 'can_change_book'
 
+@permission_required(add)
+def add_view(request):
+    return render(request, 'relationship_app/add_view.html')
+
+@permission_required(change)
+def change_view(request):
+    return render(request, 'relationship_app/change_view.html')
+
+@permission_required(delete)
+def delete_view(request):
+    return render(request, 'relationship_app/delete_view.html')   

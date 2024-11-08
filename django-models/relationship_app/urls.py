@@ -13,7 +13,10 @@ urlpatterns= [
     path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='relationship_app/login.html'), name='logout'),
     path('register/', views.register.as_view(), name='register'),
-    path('admin/', admin_view, name='admin')
-    path('librarian/', librarian_view, name='librarian')
-    path('member/', member_view, name='member')
+    path('admin/', admin_view, name='admin'),
+    path('librarian/', librarian_view, name='librarian'),
+    path('member/', member_view, name='member'),
+    path('add/', views.add_view, name='add_book'),
+    path('change/', views.change_view, name='change_book'),
+    path('delete/', views.delete_view, name='delete_book')
 ]
