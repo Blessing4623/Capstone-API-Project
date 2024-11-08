@@ -53,11 +53,11 @@ def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
 def add(user):
-    return Book.Meta.permissions = 'can_add_book'
+    return Book.Meta.permissions = 'relationship_app.can_add_book'
 def change(user):
-    return Book.Meta.permissions = 'can_change_book'
+    return Book.Meta.permissions = 'relationship_app.can_change_book'
 def delete(user):
-    return Book.Meta.permissions = 'can_change_book'
+    return Book.Meta.permissions = 'relationship_app.can_delete_book'
 
 @permission_required(add)
 def add_view(request):
