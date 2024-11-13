@@ -1,10 +1,14 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import Permission
 # Create your models here.
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
     publication_year = models.IntegerField(default=2000)
+    class Meta:
+        permissions = (can_view, can_create, can_edit, can_delete)
 
 class CustomUser(AbstractUser):
     date_of_birth = models.DateField(blank=True)
