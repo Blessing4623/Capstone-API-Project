@@ -6,6 +6,7 @@ from rest_framework import status
 class BookTest(APITestCase):
     def setUp(self):
         self.author = Author.objects.create(name='Rose')
+        self.client.login(username='user', password='1234')
         self.book_data = {
             'title' : 'One way',
             'publication_year': 2014,
