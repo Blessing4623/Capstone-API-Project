@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    {% csrf_token %}
+    <ul>
+        <li><img src={{ profile.image.url }} alt="profile_pic" /></li>
+        <li><h4>{{ profile.user.first_name }} {{ profile.user.last_name }}</h4>
+        <li><p>{{ profile.user.username }}</li>
+        <h3>Bio</h3>
+        <li><p>{{ profile.bio }}
+    </ul>
+</div>
+{% endblock %}
