@@ -12,9 +12,9 @@ urlpatterns = [
     path('profile/', profile_view, name='profile'),
     path('profile_edit/', profile_edit_view, name='profile_edit'),
     path('posts/', PostListView.as_view(), name='posts' ),
-    path('posts/new/', PostCreateView.as_view(), name='new_post'),
+    path('post/new/', PostCreateView.as_view(), name='new_post'),
     path('posts/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
-    path('posts/<int:pk>/edit/', PostUpdateView.as_view(), name='post_update'),
-    path('posts/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
+    path('post/<int:pk>/edit/', PostUpdateView.as_view(), name='post_update'),
+    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
 ]
 
