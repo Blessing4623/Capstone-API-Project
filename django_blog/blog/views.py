@@ -31,11 +31,11 @@ def profile_view(request):
     return render(request, 'blog/profile.html', {'profile': profile})
 class PostListView(ListView):
     model = Post
-    template_name = 'blog/list.html'
+    template_name = 'blog/post_list.html'
     context_object_name = 'post'
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'blog/detail.html'
+    template_name = 'blog/post_detail.html'
     context_object_name = 'post'
 class PostUpdateView(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post
@@ -47,7 +47,7 @@ class PostUpdateView(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
 class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
     form_class = PostForm
-    template_name = 'blog/create.html'
+    template_name = 'blog/post_form.html'
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
