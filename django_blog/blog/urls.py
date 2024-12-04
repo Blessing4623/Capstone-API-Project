@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
 from .views import RegisterView, profile_edit_view, profile_view, PostCreateView
 from .views import PostUpdateView, PostDeleteView, PostListView, PostDetailView
-from .views import CommentCreateView, CommentListView
+from .views import CommentCreateView, CommentListView, CommentUpdateView, CommentDeleteView
 from django.shortcuts import redirect
 
 # create your urls here
@@ -17,7 +17,9 @@ urlpatterns = [
     path('posts/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post_update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
-    path('post/<int:post_id>/comment/new', CommentCreateView.as_view(), name='new_comment'),
-    path('post/<int:post_id>/comments/', CommentListView.as_view(), name='comments')
+    path('post/<int:pk>/comments/new', CommentCreateView.as_view(), name='new_comment'),
+    path('post/<int:pk>/comments/', CommentListView.as_view(), name='comments'),
+    path('comment/<int:pk>/update', CommentUpdateView.as_view(), name='comment_update'),
+    path('comment/<int:pk>/delete', CommentDeleteView.as_view(), name='comment_delete')
 ]
 
