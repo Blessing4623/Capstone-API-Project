@@ -11,3 +11,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True)
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete= models.CASCADE)
+    author = models.ForeignKey(User, on_delete= models.CASCADE)
+    content = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

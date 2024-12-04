@@ -3,4 +3,10 @@
 <p>id: {{ post.id }}</p>
 <h3>{{ post.title }}</h3>
 <p>{{ post.content }}</p>
+<hr>
+{% for comment in comments %}
+<p>{{ comment.content }}</p>
+<hr>
+{% endfor %}
+{{ form.as_p }}
 {% endblock %}

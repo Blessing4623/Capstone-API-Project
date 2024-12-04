@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-from .forms import ProfileForm, PostForm
+from .forms import ProfileForm, PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Post
+from .models import Profile, Post, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
 class RegisterView(CreateView):
@@ -54,3 +54,20 @@ class PostCreateView(CreateView, LoginRequiredMixin):
 class PostDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post
     success_url = 'posts/'
+
+class CommentListView(ListView):
+    model = Comment
+    # form_class = CommentForm
+    context_object_name = 'comments'
+    template_name = 'post_detail.html'
+class CommentDetailView(DetailView):
+    model = Comment
+    # form_class = CommentForm
+    context_object_name = 'comment'
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'post_detail.html'
+class CommentDeleteView(DeleteView):
+    model = Comment
+    form_class = CommentForm
