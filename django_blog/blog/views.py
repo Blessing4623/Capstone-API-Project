@@ -70,4 +70,7 @@ class CommentCreateView(CreateView):
     template_name = 'post_detail.html'
 class CommentDeleteView(DeleteView):
     model = Comment
+class CommentUpdateView(UpdateView):
+    model = Comment
     form_class = CommentForm
+    template_name = 'comment_edit.html'
