@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from .forms import ProfileForm, PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Post, Comment
+from .models import Profile, Post, Comment, Tag
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 # Create your views here.
 class RegisterView(CreateView):
     form_class = UserCreationForm
@@ -74,3 +75,22 @@ class CommentUpdateView(UpdateView):
     model = Comment
     form_class = CommentForm
     template_name = 'comment_edit.html'
+def search_view(request):
+    query = request.GET['q']
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query)
+        ).distinct()
+    else:
+        results = Post.objects.none()
+    context = {
+        'results': results,
+        'query': query,
+    }
+    return render(request, 'search_results.html', context)
+def tagged_posts_view(request, tag_name): 
+    tag = get_object_or_404(Tag, name=tag_name) 
+    posts = Post.objects.filter(tags=tag) 
+    context = { 'tag': tag, 'posts': posts, }
+    return render(request, 'tagged_posts.html', context)

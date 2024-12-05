@@ -4,6 +4,7 @@ from .views import RegisterView, profile_edit_view, profile_view, PostCreateView
 from .views import PostUpdateView, PostDeleteView, PostListView, PostDetailView
 from .views import CommentCreateView, CommentListView, CommentUpdateView, CommentDeleteView
 from django.shortcuts import redirect
+from .views import search_view, tagged_posts_view
 
 # create your urls here
 urlpatterns = [
@@ -20,6 +21,8 @@ urlpatterns = [
     path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='new_comment'),
     path('post/<int:pk>/comments/', CommentListView.as_view(), name='comments'),
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment_update'),
-    path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete')
+    path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
+    path('search/', search_view, name='search'),
+    path('tags/<tag_name>/', tagged_posts_view, name='tags')
 ]
 
