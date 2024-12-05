@@ -95,6 +95,6 @@ def tagged_posts_view(request, tag_name):
     posts = Post.objects.filter(tags=tag) 
     context = { 'tag': tag, 'posts': posts, }
     return render(request, 'tagged_posts.html', context)
-class PostBayTagListView(ListView):
+class PostByTagListView(ListView):
     model = Tag
     form_class = PostForm

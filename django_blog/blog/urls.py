@@ -4,7 +4,7 @@ from .views import RegisterView, profile_edit_view, profile_view, PostCreateView
 from .views import PostUpdateView, PostDeleteView, PostListView, PostDetailView
 from .views import CommentCreateView, CommentListView, CommentUpdateView, CommentDeleteView
 from django.shortcuts import redirect
-from .views import search_view, tagged_posts_view, PostBayTagListView
+from .views import search_view, tagged_posts_view, PostByTagListView
 
 # create your urls here
 urlpatterns = [
@@ -23,6 +23,6 @@ urlpatterns = [
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment_update'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
     path('search/', search_view, name='search'),
-    path('tags/<slug:tag_slug>/', PostBayTagListView.as_view(), name='tags')
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='tags')
 ]
 
