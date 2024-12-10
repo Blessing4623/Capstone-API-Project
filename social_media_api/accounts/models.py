@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.contrib.auth import get_user_model
-User = get_user_model()
+
 # Create your models here.
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, bio=None, profile_picture=None, followers=None):
@@ -9,12 +8,12 @@ class CustomUserManager(BaseUserManager):
             email = self.normalize_email(email),
             bio = bio,
             profile_picture = profile_picture,
-            followers = followers
+            
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_super_user(self, email, password=None):
+    def create_superuser(self, email, password=None):
         user = self.create_user(email, password)
         user.is_admin = True
         user.save(self._db)
@@ -23,5 +22,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     bio = models.TextField(max_length=1000000, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='media/', blank=True, null=True)
-    followers = models.ManyToManyField('self', symmetrical=False, blank=True, null=True)
-    objects = CustomUserManager
+    followers = models.ManyToManyField('self', symmetrical=False, blank=True)
+    
+    
+    objects = CustomUserManager()
