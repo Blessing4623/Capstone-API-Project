@@ -7,6 +7,6 @@ router.register(r'', UserViewSet, basename='accounts')
 urlpatterns = [
     path('', include(router.urls)),
     path('api/token/', obtain_auth_token, name='token'),
-    path('login/', UserViewSet.as_view({'post': 'login'}, name='login')),
-    path('register/', UserViewSet.as_View({'post': 'register'}), name='register')
+    path('login/', UserViewSet.as_view({'post': 'login'}), name='login'),
+    path('register/', UserViewSet.as_view({'post': 'register'}), name='register')
 ]
