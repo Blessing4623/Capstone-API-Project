@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from .serializers import PostSerializer, CommentSerializer
-from .models import Posts, Comment
+from .models import Post, Comment
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.viewsets import ModelViewSet
 # Create your views here.
@@ -11,19 +11,19 @@ class IsOwner(BasePermission):
 
 class CreatePostView(generics.CreateAPIView):
     serializer_class = PostSerializer
-    queryset = Posts.objects.all()
+    queryset = Post.objects.all()
     permission_classes = [IsAuthenticated]
 class UpdatePostView(generics.UpdateAPIView):
     serializer_class = PostSerializer
-    queryset = Posts.objects.all()
+    queryset = Post.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
 class ListPostView(generics.ListAPIView):
     serializer_class = PostSerializer
-    queryset = Posts.objects.all()
+    queryset = Post.objects.all()
     permission_classes = [IsAuthenticated]
 class DeletePostView(generics.DestroyAPIView):
     serializer_class = PostSerializer
-    queryset = Posts.objects.all()
+    queryset = Post.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
 
 class CreateCommentView(generics.CreateAPIView):
@@ -45,7 +45,7 @@ class DeleteCommentiew(generics.DestroyAPIView):
 
 class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
-    queryset= Posts.objects.all()
+    queryset= Post.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
     def get_permissions(self):
         if self.action in ('update', 'partial_update', 'destroy'):
