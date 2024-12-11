@@ -3,7 +3,7 @@ from rest_framework import generics
 from .serializers import PostSerializer, CommentSerializer
 from .models import Post, Comment
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import viewsets
 # Create your views here.
 class IsOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -43,7 +43,7 @@ class DeleteCommentiew(generics.DestroyAPIView):
     queryset = Comment.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
 
-class PostViewSet(ModelViewSet):
+class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset= Post.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
@@ -54,7 +54,7 @@ class PostViewSet(ModelViewSet):
             self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
     
-class CommentViewSet(ModelViewSet):
+class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset= Comment.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
