@@ -10,7 +10,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import serializers
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework import generics
+from rest_framework import permissions
 User = get_user_model()
+CustomUser = get_user_model()
 # Create your views here.
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
@@ -35,6 +38,12 @@ class UserViewSet(ModelViewSet):
             else:
                 return Response({'message': 'Incorrect credentials'}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+class FollowView(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()
+    permission_classes = permissions.IsAuthenticated
     
     @action(detail=True, methods=['post'])
     def follow_user(self, request, user_id =None):
