@@ -7,6 +7,7 @@ from rest_framework import viewsets
 from rest_framework import views
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import permissions
 # Create your views here.
 class IsOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -70,9 +71,9 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class FeedView(views.APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
-        followers = request.user.following()
-        posts = Post.objects.get(author=followers).order_by("-created_at")
+        following_users = request.user.following.all()
+        posts = Post.objects.filter(author__in=following_users).order_by("-created_at")
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data, status= status.HTTP_200_OK)
