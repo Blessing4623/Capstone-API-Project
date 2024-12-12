@@ -44,9 +44,9 @@ class UserViewSet(ModelViewSet):
 class FollowView(generics.GenericAPIView):
     queryset = CustomUser.objects.all()
     permission_classes = permissions.IsAuthenticated
+
     
-    @action(detail=True, methods=['post'])
-    def follow_user(self, request, user_id =None):
+    def post(self, request, user_id =None, *args, **kwargs ):
         try:
             target_User= User.objects.get(pk=user_id)
             if target_User != request.user:
@@ -56,8 +56,11 @@ class FollowView(generics.GenericAPIView):
         except User.DoesNotExist:
             return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
     
-    @action(detail=True, methods=['post'])
-    def unfollow_user(self, request, user_id=None):
+
+class UnfollowView(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request, user_id=None, *args, **kwargs):
         try:
             target_User= User.objects.get(pk= user_id)
             if target_User != request.user:
@@ -66,9 +69,4 @@ class FollowView(generics.GenericAPIView):
             return Response({'message': 'You cannot unfollow yourself'}, status=status.HTTP_403_FORBIDDEN)
         except User.DoesNotExist:
             return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
-    def get_permissions(self):
-        if self.action in ['follow_user', 'unfollow_user']:
-            self.permission_classes = [IsAuthenticated]
-        else:
-            self.permission_classes = [AllowAny]
-        return super().get_permissions()
+    

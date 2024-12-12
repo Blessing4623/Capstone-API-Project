@@ -14,3 +14,7 @@ class Comment(models.Model):
     content= models.TextField()
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
+
+class Like(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_like')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_who_liked')
