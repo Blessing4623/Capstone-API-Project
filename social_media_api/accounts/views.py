@@ -38,7 +38,12 @@ class UserViewSet(ModelViewSet):
             else:
                 return Response({'message': 'Incorrect credentials'}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+    def get_permissions(self):
+        if self.action in ['login', 'register']:
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
 
 
 class FollowView(generics.GenericAPIView):
