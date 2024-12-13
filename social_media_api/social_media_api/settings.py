@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@&pi%3w$+mhflh=wt9f@)jzzssxd*a)ej_9dxp&bg_h%2p7!vt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -132,3 +132,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'Deny'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_DIRECT = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
