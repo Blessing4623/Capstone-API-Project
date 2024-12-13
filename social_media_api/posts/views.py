@@ -90,12 +90,12 @@ class LikeView(generics.GenericAPIView):
     def post(self, request, pk=None, *args, **kwargs):
         serializer = LikeSerializer(data= request.data)
         if serializer.is_valid():
-            like, created = Like.objects.get_or_create(user_id=request.user.id, post_id=pk)
-            post = Post.objects.get(id=pk)
+            post = generics.get_object_or_404(Post, pk=pk)
             user2_id = post.author.id
             content_type = ContentType.objects.get_for_model(Post)
             user = User.objects.get(user_id=request.user.id)
             user2 = User.objects.get(user_id=user2_id)
+            like, created = Like.objects.get_or_create(user=request.user, post=post)
             if created:
                 
                 notification = Notification.objects.create(
