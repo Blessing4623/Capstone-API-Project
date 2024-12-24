@@ -1,0 +1,5 @@
+django
+djangorestframework
+djangorestframework-simplejwt
+django-filters
+drf_yasg
