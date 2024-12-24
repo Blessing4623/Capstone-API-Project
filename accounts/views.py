@@ -38,7 +38,7 @@ class UnlikeView(generics.GenericAPIView):
     queryset = Like.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 
-    def delete(self, request, title=None, review_id=None):
+    def post(self, request, title=None, review_id=None):
         movie = get_object_or_404(Movie, name=title)
         review = get_object_or_404(Review, id=review_id, movie=movie)
         try:
