@@ -91,11 +91,10 @@ class CastAndCrewSerializer(serializers.ModelSerializer):
 
 # movie serializer
 class MovieSerializer(serializers.ModelSerializer):
-    reviews = ReviewListSerializer(many=True, read_only=True)
     cast_and_crew = CastAndCrewSerializer(many=True, read_only=True)
     class Meta:
         model = Movie
-        fields = ['id', 'name', 'description', 'release_date', 'genre', 'director', 'cast_and_crew', 'reviews']
+        fields = ['id', 'name', 'description', 'release_date', 'genre', 'director', 'cast_and_crew']
 
 # listing out movie serializers
 class MovieListSerializer(serializers.ModelSerializer):
