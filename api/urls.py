@@ -6,7 +6,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 router = DefaultRouter()
 router.register(r'movies', MovieViewSet, basename='movies')
-
+# suitable urls for the views
 urlpatterns = [
     path('', include(router.urls)),
     path('token_auth/', obtain_auth_token, name='api-auth-token'),

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+# suitable urls for the views
 urlpatterns = [
     path('movies/<str:title>/reviews/<int:review_id>/like/', views.LikeView.as_view(), name='like'),
     path('movies/<str:title>/reviews/<int:review_id>/unlike/', views.UnlikeView.as_view(), name='unlike'),
