@@ -205,3 +205,62 @@ class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [permissions.IsAdminUser]
+
+
+class MovieNotFoundReviewView(generics.GenericAPIView):
+    serializer_class = MovieNotFoundReviewSerializer
+    queryset = Review.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request):
+        serializer = MovieNotFoundReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            title = serializer.validated_data['movie_title']
+            api_key = '7d9a0695'
+            url = f'https://www.omdbapi.com/?t={title}&apikey={api_key}'
+            response = requests.get(url)
+            if response.status_code == 200:
+                data = response.json()
+                titles = None
+                Title = data.get('Title', '').split(', ')
+                for title in Title:
+                    titles = title
+                movie_name = titles
+                if movie_name != None and movie_name != "":
+                    try:
+                        movies= Movie.objects.get(name=movie_name)
+                        return Response({'message':f'movie exists in the api create a post request for api/movies/{movies.name}/reviews/'}, status=status.HTTP_400_BAD_REQUEST)
+                    except Movie.DoesNotExist:
+                        omdb_details = fetch_movie_details(movie_name) 
+                        description= omdb_details['description'],  
+                        director=omdb_details['director'],
+                        genre = omdb_details['genre'],
+                        release_date=omdb_details['release_date']
+                        Movie.objects.create(
+                            name = movie_name,
+                            description = description,
+                            genre = genre,
+                            director = director,
+                            release_date = release_date
+                        )
+                        movie = get_object_or_404(Movie, name=movie_name)
+                        omdb_cast_and_crew = fetch_cast_and_crew(movie_name)
+                        for member in omdb_cast_and_crew:
+                            CastAndCrew.objects.create(name=member['name'], role=member['role'], movie=movie)
+                        review = Review.objects.create(
+                            movie= movie,
+                            review_content = serializer.validated_data['review_content'],
+                            user = request.user,
+                            rating = serializer.validated_data['rating']
+                        )
+                        review.save()
+
+                        serializer2 = ReviewListSerializer(review, many=False)
+                        return Response(serializer2.data, status=status.HTTP_200_OK)
+                else:
+                    return Response({'message': 'movie not found please recheck the movie title'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({'message': 'movie not found please recheck title'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+                    

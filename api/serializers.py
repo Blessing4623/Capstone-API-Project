@@ -97,3 +97,9 @@ class MovieCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields= ['name', 'rating']
+
+class MovieNotFoundReviewSerializer(serializers.ModelSerializer):
+    movie_title = serializers.CharField(max_length=1000)
+    class Meta:
+        model = Review
+        fields = ['review_content', 'rating', 'movie_title']

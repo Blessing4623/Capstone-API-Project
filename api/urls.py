@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import MovieViewSet, UserCreateView, UserDestroyView, UserListView
+from .views import MovieViewSet, UserCreateView, UserDestroyView, UserListView, MovieNotFoundReviewView
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt import views as jwt_views
 from rest_framework.authtoken.views import obtain_auth_token
@@ -15,5 +15,6 @@ urlpatterns = [
     path('register/', UserCreateView.as_view(), name='register'),
     path('movies/<str:name>/reviews/<int:review_id>/', MovieViewSet.as_view({'get': 'movie_reviews'}), name='review'),
     path('user/admin/delete_user/<str:username>/', UserDestroyView.as_view(), name='delete_user'),
-    path('user/admin/show_users/', UserListView.as_view(), name='show_users')
+    path('user/admin/show_users/', UserListView.as_view(), name='show_users'),
+    path('review/', MovieNotFoundReviewView.as_view(), name='review')
 ]
