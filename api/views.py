@@ -106,7 +106,7 @@ class MovieViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
     
     # the action for getting, creating and deleting movie reviews
-    @action(detail=True, methods=['get', 'post', 'delete'], url_path='reviews')
+    @action(detail=True, methods=['get', 'post', 'delete', 'put'], url_path='reviews')
     def movie_reviews(self, request, name=None, review_id=None):
         movie = get_object_or_404(Movie, name=name)
         # when we have the get method

@@ -144,7 +144,7 @@ class CommentView(generics.GenericAPIView):
         except Comment.DoesNotExist:
             return Response({'message': 'No comments to show'}, status=status.HTTP_200_OK)
 # for deleting comments       
-class CommentDeleteView(generics.GenericAPIView):
+class CommentEditView(generics.GenericAPIView):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
     permission_classes = [permissions.IsAuthenticated]
@@ -159,4 +159,17 @@ class CommentDeleteView(generics.GenericAPIView):
             return Response({'message': 'You have deleted this comment'}, status=status.HTTP_200_OK)
         except Comment.DoesNotExist:
             return Response({'message': 'You did not comment on this review'}, status=status.HTTP_404_NOT_FOUND)
+    # editing comments
+    def put(self, request, title=None, review_id=None, comment_id=None):
+        movie = get_object_or_404(Movie, name=title)
+        review = get_object_or_404(Review, id=review_id, movie=movie)
+        try:
+            comment = Comment.objects.get(id=comment_id, review=review, sender=request.user)
+            serializer = CommentCreateSerializer(comment, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Comment.DoesNotExist:
+            return Response({'message': 'You did not comment on this review'}, status=status.HTTP_400_BAD_REQUEST)
         
