@@ -12,6 +12,7 @@ from .models import Movie, CastAndCrew, Review
 from .serializers import ReviewList2Serializer
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from .serializers import MovieNotFoundReviewSerializer
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from .serializers import MovieSerializer, CastAndCrewSerializer, ReviewSerializer, MovieListSerializer, UserSerializer, ReviewListSerializer, MovieCreateSerializer
