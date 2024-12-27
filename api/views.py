@@ -62,6 +62,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny, permissions.IsAuthenticated, permissions.IsAdminUser]
     lookup_field = 'name'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['rating']
     search_fields = ['name', 'description', 'genre']
     # listing movies
     def list(self, request, *args, **kwargs):

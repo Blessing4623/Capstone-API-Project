@@ -101,7 +101,7 @@ class NotificationListView(generics.GenericAPIView):
     queryset = Notification.objects.all()
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
-        notifications = Notification.objects.filter(user=request.user)
+        notifications = Notification.objects.filter(user=request.user).order_by('-time_created')
         serializer = NotificationSerializer(notifications, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
