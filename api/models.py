@@ -9,7 +9,16 @@ class Movie(models.Model):
     release_date = models.DateField(null=True, blank=True)
     genre = models.CharField(max_length=1000, null=True, blank=True)
     director = models.CharField(max_length= 3000, null=True, blank=True)
-    
+    rating = models.DecimalField(
+        max_digits= 3,
+        decimal_places= 1,
+        validators =[
+            MinValueValidator(0.0),
+            MaxValueValidator(10.0)
+        ],
+        null= True,
+        blank=True
+    )
 
 # Review model
 class Review(models.Model):
